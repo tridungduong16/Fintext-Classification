@@ -51,8 +51,12 @@ python -m src.finetune_model
 - Feel free to explore and modify the code according to your requirements.
 
 # Conclusion
-Through this project, we aim to gain insights into the sentiments expressed in financial news headlines from a retail investor's perspective. By employing advanced natural language processing techniques and large language models, we can analyze the sentiments and contribute to understanding the sentiment trends in the financial domain.
+Based on my findings, FinBERT outperforms large language models in terms of both inference speed and accuracy when applied to sentiment classification tasks. Moreover, incorporating gradient boosting classifiers with FinBERT can further enhance the overall performance and effectiveness of the system.
 
-For any questions or suggestions, please feel free to reach out to us.
 
-Happy analyzing!
+
+
+
+
+For any questions or suggestions, please feel free to reach out to me.
+
