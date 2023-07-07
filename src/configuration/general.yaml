@@ -1,0 +1,45 @@
+RAW_DATA_PATH: /home/duongd/WorkingDirectory/Fintext-Classification/data/raw_data/
+PROCESSED_DATA_PATH: /home/duongd/WorkingDirectory/Fintext-Classification/data/processed_data
+RESULTS: /home/duongd/WorkingDirectory/Fintext-Classification/outputs/results
+
+MICRO_BATCH_SIZE: 4
+BATCH_SIZE: 4
+GRADIENT_ACCUMULATION_STEPS: 2
+EPOCHS: 100
+LEARNING_RATE: 2e-5 
+CUTOFF_LEN: 32
+LORA_R: 64
+LORA_ALPHA: 16
+LORA_DROPOUT: 0.05
+USE_WANDB: True
+CACHE_DATA: True
+QUANTIZED: True
+MAX_SEQ_LENGTH: 512
+VAL_SET_SIZE: 500
+EVAL_STEP: 500
+OPTIM: paged_adamw_8bit
+WARM_UP_STEP: 20
+
+LLAMA_FAMILY: 
+  - llama-7b-hf
+  - llama-13b-hf
+  - alpaca-13b
+  - alpaca-lora-7b
+  - WizardLM-13B-V1.0
+  - open_llama_13b
+  - open-llama-13b-open-instruct
+
+FALCON_FAMILY:
+  - falcon-7b
+  - falcon-40b
+  - falcon-7b-instruct
+  - WizardLM-Uncensored-Falcon-7b
+  - falcon-40b-instruct
+  - mpt-30b-instruct
+
+TRAINED_MODEL:  /data/second_home/duongd/trained_finetuned_models
+
+MODEL_NAME: xgen-7b-8k-open-instruct
+PEFT_MODEL_ID_PATH: /data/second_home/duongd/trained_finetuned_models/sentiment-xgen-7b-8k-open-instruct_2023-07-06 
+MODEL_ID: /data/second_home/duongd/xgen-7b-8k-open-instruct
+CACHE_DIR:  /data/second_home/duongd
