@@ -29,10 +29,22 @@ To get started with this project, follow these steps:
 
 Clone this repository: git clone https://github.com/your-username/financial-sentiment-analysis.git
 Navigate to the project directory: cd financial-sentiment-analysis
-Install the required dependencies: pip install -r requirements.txt
-Open and run the sentiment_analysis.ipynb notebook using Jupyter or your preferred Python environment.
-Follow the instructions in the notebook to preprocess the data, train the sentiment analysis model, and make predictions.
-Feel free to explore and modify the code according to your requirements.
+- Install the required dependencies: pip install -r requirements.txt
+- Go to sr/configuration and change the config to your path data and model
+- Run classification with FinBERT pretrained: 
+```
+python -m src.classification_finbert
+```
+- Run classification with LLMs model: 
+```
+python -m src.classifier_llm
+```
+- Run fine-tune LLMs model for sentiment analysis task
+```
+python -m src.finetune_model
+```
+
+- Feel free to explore and modify the code according to your requirements.
 
 # Conclusion
 Through this project, we aim to gain insights into the sentiments expressed in financial news headlines from a retail investor's perspective. By employing advanced natural language processing techniques and large language models, we can analyze the sentiments and contribute to understanding the sentiment trends in the financial domain.
