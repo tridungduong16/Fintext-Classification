@@ -35,6 +35,10 @@ Navigate to the project directory: cd financial-sentiment-analysis
 ```
 python -m src.classification_finbert
 ```
+- Run classification with FinBERT pretrained + Classifier such as GradientBoosting or LightGBM: 
+```
+python -m src.classification_finbert
+```
 - Run classification with LLMs model: 
 ```
 python -m src.classifier_llm
