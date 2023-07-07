@@ -8,6 +8,7 @@ from peft import LoraConfig, PeftConfig, PeftModel, get_peft_model
 from sklearn.model_selection import train_test_split
 from transformers import (LlamaForCausalLM, LlamaTokenizer, StoppingCriteria,
                           StoppingCriteriaList)
+import pdb
 
 os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 os.environ["CUDA_LAUNCH_BLOCKING"] = "1"
@@ -44,7 +45,7 @@ def extract_sentiment(response_text):
 
 def find_sentiment(response_text):
     sentiment_pattern = r"\b(?:positive|negative|neutral)\b"
-    sentiment_matches = re.findall(sentiment_pattern, sentence, re.IGNORECASE)
+    sentiment_matches = re.findall(sentiment_pattern, response_text, re.IGNORECASE)
     sentiment_matches_lower = [match.lower() for match in sentiment_matches]
     return sentiment_matches_lower
 
@@ -85,6 +86,7 @@ def main(cfg: DictConfig):
             quantization_config=nf4_config,
             device_map="auto",
         )
+        # pdb.set_trace()
     else:
         compute_dtype = getattr(torch, "float16")
         bnb_config = BitsAndBytesConfig(
@@ -109,7 +111,9 @@ def main(cfg: DictConfig):
             cfg.MODEL_ID, cache_dir=cfg.CACHE_DIR,
         )
 
-    model = PeftModel.from_pretrained(model, cfg.PEFT_MODEL_ID_PATH)
+
+    # pdb.set_trace()
+    model = PeftModel.from_pretrained(model, "/data/second_home/duongd/trained_finetuned_models/sentiment-xgen-7b-8k-open-instruct_2023-07-06")
     model.config.pad_token_id = tokenizer.eos_token_id
     tokenizer.pad_token = tokenizer.eos_token
 
@@ -145,8 +149,9 @@ def main(cfg: DictConfig):
     for _, value in tqdm(df_train.iterrows()):
         input_text = value["prompt_inference"]
         response_text = inference(model, tokenizer, input_text, generation_config)
-        res = extract_sentiment(response_text)
-        predicted_train.append(res)
+        # res = extract_sentiment(response_text)
+        predicted_train.append(response_text)
+        # pdb.set_trace()
     df_train[f"raw-prediction"] = predicted_train
     
 
@@ -154,21 +159,22 @@ def main(cfg: DictConfig):
     for _, value in tqdm(df_val.iterrows()):
         input_text = value["prompt_inference"]
         response_text = inference(model, tokenizer, input_text, generation_config)
-        res = extract_sentiment(response_text)
-        predicted_val.append(res)
+        # res = extract_sentiment(response_text)
+        predicted_val.append(response_text)
+        # pdb.set_trace()
     df_val[f"raw-prediction"] = predicted_val
 
     predicted_test = []
     for _, value in tqdm(df_test.iterrows()):
         input_text = value["prompt_inference"]
         response_text = inference(model, tokenizer, input_text, generation_config)
-        res = extract_sentiment(response_text)
-        predicted_test.append(res)
+        # res = extract_sentiment(response_text)
+        predicted_test.append(response_text)
     df_test[f"raw-prediction"] = predicted_test
 
-    df_train.to_csv(f"{cfg.RESULTS}/{cfg.MODEL_NAME}_train.csv", index=False)
-    df_val.to_csv(f"{cfg.RESULTS}/{cfg.MODEL_NAME}_validation.csv", index=False)
-    df_test.to_csv(f"{cfg.RESULTS}/{cfg.MODEL_NAME}_test.csv", index=False)
+    df_train.to_csv(f"{cfg.RESULTS}/{cfg.MODEL_NAME}_v2-train.csv", index=False)
+    df_val.to_csv(f"{cfg.RESULTS}/{cfg.MODEL_NAME}_-v2-validation.csv", index=False)
+    df_test.to_csv(f"{cfg.RESULTS}/{cfg.MODEL_NAME}_-v2-test.csv", index=False)
 
 if __name__ == "__main__":
     main()
